@@ -65,7 +65,7 @@ function exitIfDone(type, failures) {
 
     // if no env for TEST_WATCH, tests should exit when done
     if (!runnerOptions.testWatch) {
-      if (clientFailures + serverFailures > 0) {
+      if (clientFailures === null || serverFailures === null || clientFailures + serverFailures > 0) {
         process.exit(1); // exit with non-zero status if there were failures
       } else {
         process.exit(0);
