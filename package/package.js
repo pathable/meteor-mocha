@@ -14,6 +14,7 @@ Package.onUse(function onUse(api) {
   ]);
 
   api.use([
+    'browser-policy',
     'meteortesting:browser-tests@0.1.2'
   ], 'server');
 
