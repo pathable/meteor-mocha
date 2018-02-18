@@ -1,9 +1,12 @@
+import https from 'https';
+import http from 'http';
+
 import { mochaInstance } from 'meteor/practicalmeteor:mocha-core';
 import { startBrowser } from 'meteor/meteortesting:browser-tests';
 
 import setArgs from './runtimeArgs';
 
-const { mochaOptions, runnerOptions } = setArgs();
+const { mochaOptions, runnerOptions, coverageOptions } = setArgs();
 const { grep, invert, reporter, serverReporter, xUnitOutput } = mochaOptions || {};
 
 // Since intermingling client and server log lines would be confusing,
@@ -63,14 +66,107 @@ function exitIfDone(type, failures) {
       console.log('--------------------------------');
     }
 
-    // if no env for TEST_WATCH, tests should exit when done
-    if (!runnerOptions.testWatch) {
-      if (clientFailures + serverFailures > 0) {
-        process.exit(1); // exit with non-zero status if there were failures
-      } else {
-        process.exit(0);
+    let promise = Promise.resolve(true);
+
+    if (coverageOptions) {
+      const cLog = (...args) => {
+        if (coverageOptions.verbose) {
+          console.log(...args);
+        }
+      };
+
+      cLog('Export code coverage');
+      const r = (/^http:/.test(Meteor.absoluteUrl()) ? http : https);
+
+      // TODO: Run coverage reports here ...
+      const importCoverageDump = () => new Promise((resolve, reject) => {
+        cLog('- In coverage');
+        r.get(Meteor.absoluteUrl('coverage/import'), (res) => {
+          const { statusCode } = res;
+
+          if (statusCode !== 200) {
+            reject(new Error('Failed to import coverage file'));
+          }
+          resolve();
+        }).on('error', () => {
+          reject(new Error('Failed to import coverage file'));
+        });
+      });
+
+      const exportReport = (fileType, reportType) => new Promise((resolve, reject) => {
+        cLog(`- Out ${fileType}`);
+        const url = Meteor.absoluteUrl(`/coverage/export/${fileType}`);
+        r.get(url, (res) => {
+          const { statusCode } = res;
+
+          if (statusCode !== 200) {
+            reject(new Error(`Failed to save ${fileType} ${reportType}`));
+          }
+          resolve();
+        }).on('error', () => {
+          reject(new Error(`Failed to save ${fileType} ${reportType}`));
+        });
+      });
+
+      const exportRemap = () => new Promise((resolve, reject) => {
+        cLog('- Out remap');
+        r.get(Meteor.absoluteUrl('/coverage/export/remap'), (res) => {
+          const { statusCode } = res;
+
+          if (statusCode !== 200) {
+            reject(new Error('Failed to remap your coverage'));
+          }
+          resolve();
+        }).on('error', () => {
+          reject(new Error('Failed to remap your coverage'));
+        });
+      });
+
+      if (coverageOptions.in.coverage) {
+        promise = promise.then(() => importCoverageDump());
       }
+
+      if (coverageOptions.out.coverage) {
+        promise = promise.then(() => exportReport('coverage', 'dump'));
+      }
+
+      if (coverageOptions.out.lcovonly) {
+        promise = promise.then(() => exportReport('lcovonly', 'coverage'));
+      }
+
+      if (coverageOptions.out.html) {
+        promise = promise.then(() => exportReport('html', 'report'));
+      }
+
+      if (coverageOptions.out.json) {
+        promise = promise.then(() => exportReport('json', 'report'));
+      }
+
+      if (coverageOptions.out.text_summary) {
+        promise = promise.then(() => exportReport('text-summary', 'report'));
+      }
+
+      if (coverageOptions.out.remap) {
+        promise = promise.then(() => exportRemap());
+      }
+
+      if (coverageOptions.out.json_summary) {
+        promise = promise.then(() => exportReport('json-summary', 'dump'));
+      }
+
+      promise = promise.catch(console.error);
     }
+
+    promise = promise.then(() => {
+      // if no env for TEST_WATCH, tests should exit when done
+      if (!runnerOptions.testWatch) {
+        if (clientFailures + serverFailures > 0) {
+          process.exit(1); // exit with non-zero status if there were failures
+        } else {
+          process.exit(0);
+        }
+      }
+    });
   }
 }
 

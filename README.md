@@ -140,6 +140,26 @@ $ CLIENT_TEST_REPORTER="tap" meteor test --once --driver-package meteortesting:m
 
 Because of the differences between client and server code, not all reporters will work as client reporters. "spec" and "tap" are confirmed to work.
 
+### Run with code coverage
+
+Code coverage was made possible by including `https://github.com/serut/meteor-coverage`
+To enable code coverage you have to set `COVERAGE` to `1` and `COVERAGE_APP_FOLDER` to the path of your project. On POSIX systems you can just use `COVERAGE_APP_FOLDER=$PWO/` whereby `COVERAGE_APP_FOLDER=%cd%\` gives the expected result on Windows.
+
+In addition there are quite some additional options you can set:
+
+* **tetst**
+* `COVERAGE_VERBOSE` to see the files included in the coverage and other data that might help if something doesn't work as expected
+* `COVERAGE_IN_COVERAGE` imports a coverage dump (previously create with `COVERAGE_OUT_COVERAGE`)
+* `COVERAGE_OUT_COVERAGE` creates a dump of the coverage - used when you want to merge several coverage
+* `COVERAGE_OUT_LCOVONLY` creates a lcov report
+* `COVERAGE_OUT_HTML` creates a html report
+* `COVERAGE_OUT_JSON` creates a json report
+* `COVERAGE_OUT_JSON_SUMMARY` creates a json_summary report
+* `COVERAGE_OUT_TEXT_SUMMARY` creates a text_summary report
+* `COVERAGE_OUT_REMAP` remaps the coverage to all the available report formats
+
+Additional information can be found here: https://github.com/serut/meteor-coverage
+
 ## NPM Scripts
 
 A good best practice is to define these commands as run scripts in your app's `package.json` file. For example:
