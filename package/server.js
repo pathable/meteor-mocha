@@ -1,5 +1,4 @@
-import https from 'https';
-import http from 'http';
+import { HTTP } from 'meteor/http';
 
 import { mochaInstance } from 'meteor/practicalmeteor:mocha-core';
 import { startBrowser } from 'meteor/meteortesting:browser-tests';
@@ -76,49 +75,57 @@ function exitIfDone(type, failures) {
       };
 
       cLog('Export code coverage');
-      const r = (/^http:/.test(Meteor.absoluteUrl()) ? http : https);
 
       // TODO: Run coverage reports here ...
       const importCoverageDump = () => new Promise((resolve, reject) => {
         cLog('- In coverage');
-        r.get(Meteor.absoluteUrl('coverage/import'), (res) => {
-          const { statusCode } = res;
+        HTTP.get(Meteor.absoluteUrl('coverage/import'), (error, response) => {
+          if (error) {
+            reject(new Error('Failed to import coverage file'));
+            return;
+          }
+
+          const { statusCode } = response;
 
           if (statusCode !== 200) {
             reject(new Error('Failed to import coverage file'));
           }
           resolve();
-        }).on('error', () => {
-          reject(new Error('Failed to import coverage file'));
         });
       });
 
       const exportReport = (fileType, reportType) => new Promise((resolve, reject) => {
         cLog(`- Out ${fileType}`);
         const url = Meteor.absoluteUrl(`/coverage/export/${fileType}`);
-        r.get(url, (res) => {
-          const { statusCode } = res;
+        HTTP.get(url, (error, response) => {
+          if (error) {
+            reject(new Error(`Failed to save ${fileType} ${reportType}`));
+            return;
+          }
+
+          const { statusCode } = response;
 
           if (statusCode !== 200) {
             reject(new Error(`Failed to save ${fileType} ${reportType}`));
           }
           resolve();
-        }).on('error', () => {
-          reject(new Error(`Failed to save ${fileType} ${reportType}`));
         });
       });
 
       const exportRemap = () => new Promise((resolve, reject) => {
         cLog('- Out remap');
-        r.get(Meteor.absoluteUrl('/coverage/export/remap'), (res) => {
-          const { statusCode } = res;
+        HTTP.get(Meteor.absoluteUrl('/coverage/export/remap'), (error, response) => {
+          if (error) {
+            reject(new Error('Failed to remap your coverage'));
+            return;
+          }
+
+          const { statusCode } = response;
 
           if (statusCode !== 200) {
             reject(new Error('Failed to remap your coverage'));
           }
           resolve();
-        }).on('error', () => {
-          reject(new Error('Failed to remap your coverage'));
         });
       });
 
