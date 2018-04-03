@@ -25,7 +25,7 @@ function clientLogBuffer(line) {
 function printHeader(type) {
   const lines = [
     '\n--------------------------------',
-    `----- RUNNING ${type} TESTS -----`,
+    Meteor.isAppTest ? `--- RUNNING APP ${type} TESTS ---` : `----- RUNNING ${type} TESTS -----`,
     '--------------------------------\n',
   ];
   lines.forEach((line) => {
@@ -58,8 +58,8 @@ function exitIfDone(type, failures) {
     if (runnerOptions.runServer && runnerOptions.runClient && runnerOptions.browserDriver) {
       console.log('All tests finished!\n');
       console.log('--------------------------------');
-      console.log(`SERVER FAILURES: ${serverFailures}`);
-      console.log(`CLIENT FAILURES: ${clientFailures}`);
+      console.log(`${Meteor.isAppTest ? 'APP ' : ''}SERVER FAILURES: ${serverFailures}`);
+      console.log(`${Meteor.isAppTest ? 'APP ' : ''}CLIENT FAILURES: ${clientFailures}`);
       console.log('--------------------------------');
     }
 
