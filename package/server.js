@@ -1,4 +1,4 @@
-/* global BrowserPolicy: false */
+import { BrowserPolicy } from 'meteor/browser-policy-common';
 import { mochaInstance } from 'meteor/practicalmeteor:mocha-core';
 import { startBrowser } from 'meteor/meteortesting:browser-tests';
 
