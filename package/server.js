@@ -102,7 +102,12 @@ function serverTests(cb) {
   });
 
   mochaInstance.run((failureCount) => {
-    exitIfDone('server', failureCount);
+    if (typeof failureCount !== 'number') {
+      console.log('Mocha did not return a failure count for server tests as expected');
+      exitIfDone('server', 1);
+    } else {
+      exitIfDone('server', failureCount);
+    }
     if (cb) cb();
   });
 }
@@ -131,7 +136,12 @@ function clientTests() {
       clientLogBuffer(data.toString());
     },
     done(failureCount) {
-      exitIfDone('client', failureCount);
+      if (typeof failureCount !== 'number') {
+        console.log('The browser driver package did not return a failure count for server tests as expected');
+        exitIfDone('client', 1);
+      } else {
+        exitIfDone('client', failureCount);
+      }
     },
   });
 }
