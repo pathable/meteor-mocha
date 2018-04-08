@@ -7,11 +7,6 @@
   },
   "author": "Dispatch Technologies, Inc. (http://www.dispatch.me/)",
   "license": "MIT",
-  "eslintConfig": {
-    "globals": {
-      "Packages": false
-    }
-  },
   "devDependencies": {
     "babel-eslint": "7.2.3",
     "eslint": "3.19.0",
