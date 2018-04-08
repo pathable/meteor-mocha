@@ -3,7 +3,7 @@ Package.describe({
   summary: 'Run Meteor package or app tests with Mocha',
   git: 'https://github.com/meteortesting/meteor-mocha.git',
   documentation: '../README.md',
-  version: '0.5.0',
+  version: '0.5.1',
   testOnly: true,
 });
 
@@ -15,8 +15,9 @@ Package.onUse(function onUse(api) {
   ]);
 
   api.use([
+    'browser-policy@1.0.0',
     'http@1.1.1',
-    'meteortesting:browser-tests@0.1.2',
+    'meteortesting:browser-tests@0.2.0'
   ], 'server');
 
   api.mainModule('client.js', 'client');

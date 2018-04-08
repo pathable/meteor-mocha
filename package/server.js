@@ -1,3 +1,4 @@
+import { BrowserPolicy } from 'meteor/browser-policy-common';
 import { mochaInstance } from 'meteor/practicalmeteor:mocha-core';
 import { startBrowser } from 'meteor/meteortesting:browser-tests';
 
@@ -6,6 +7,11 @@ import handleCoverage from './server.handleCoverage';
 
 const { mochaOptions, runnerOptions, coverageOptions } = setArgs();
 const { grep, invert, reporter, serverReporter, xUnitOutput } = mochaOptions || {};
+
+// Allow the remote mocha.css file to be inserted, in case any CSP stuff
+// exists for the domain.
+BrowserPolicy.content.allowStyleOrigin('https://cdn.rawgit.com');
+BrowserPolicy.content.allowInlineStyles();
 
 // Since intermingling client and server log lines would be confusing,
 // the idea here is to buffer all client logs until server tests have
@@ -26,7 +32,7 @@ function clientLogBuffer(line) {
 function printHeader(type) {
   const lines = [
     '\n--------------------------------',
-    `----- RUNNING ${type} TESTS -----`,
+    Meteor.isAppTest ? `--- RUNNING APP ${type} TESTS ---` : `----- RUNNING ${type} TESTS -----`,
     '--------------------------------\n',
   ];
   lines.forEach((line) => {
@@ -59,8 +65,8 @@ function exitIfDone(type, failures) {
     if (runnerOptions.runServer && runnerOptions.runClient && runnerOptions.browserDriver) {
       console.log('All tests finished!\n');
       console.log('--------------------------------');
-      console.log(`SERVER FAILURES: ${serverFailures}`);
-      console.log(`CLIENT FAILURES: ${clientFailures}`);
+      console.log(`${Meteor.isAppTest ? 'APP ' : ''}SERVER FAILURES: ${serverFailures}`);
+      console.log(`${Meteor.isAppTest ? 'APP ' : ''}CLIENT FAILURES: ${clientFailures}`);
       console.log('--------------------------------');
     }
 
@@ -99,7 +105,12 @@ function serverTests(cb) {
   });
 
   mochaInstance.run((failureCount) => {
-    exitIfDone('server', failureCount);
+    if (typeof failureCount !== 'number') {
+      console.log('Mocha did not return a failure count for server tests as expected');
+      exitIfDone('server', 1);
+    } else {
+      exitIfDone('server', failureCount);
+    }
     if (cb) cb();
   });
 }
@@ -128,7 +139,12 @@ function clientTests() {
       clientLogBuffer(data.toString());
     },
     done(failureCount) {
-      exitIfDone('client', failureCount);
+      if (typeof failureCount !== 'number') {
+        console.log('The browser driver package did not return a failure count for server tests as expected');
+        exitIfDone('client', 1);
+      } else {
+        exitIfDone('client', failureCount);
+      }
     },
   });
 }

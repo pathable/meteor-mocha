@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.5.1
+
+- Fail with a message when mocha or a browser tests package does not properly pass the number of test failures
+- Add browser policy to ensure that proper styling is always applied to test results shown in a browser
+
 ## 0.5.0
 
 - Add colors for Nightmare

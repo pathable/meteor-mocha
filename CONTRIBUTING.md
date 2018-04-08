@@ -7,6 +7,6 @@ We welcome contributions. Before submitting a pull request, please check the fol
 (5) Run eslint and fix any errors:
 
 ```bash
-$ npm i
-$ npm run lint
+npm i
+npm run lint
 ```
