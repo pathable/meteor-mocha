@@ -147,7 +147,6 @@ To enable code coverage you have to set `COVERAGE` to `1` and `COVERAGE_APP_FOLD
 
 In addition there are quite some additional options you can set:
 
-* **tetst**
 * `COVERAGE_VERBOSE` to see the files included in the coverage and other data that might help if something doesn't work as expected
 * `COVERAGE_IN_COVERAGE` imports a coverage dump (previously create with `COVERAGE_OUT_COVERAGE`)
 * `COVERAGE_OUT_COVERAGE` creates a dump of the coverage - used when you want to merge several coverage

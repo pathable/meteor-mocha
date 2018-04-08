@@ -1,9 +1,8 @@
-import { HTTP } from 'meteor/http';
-
 import { mochaInstance } from 'meteor/practicalmeteor:mocha-core';
 import { startBrowser } from 'meteor/meteortesting:browser-tests';
 
 import setArgs from './runtimeArgs';
+import handleCoverage from './server.handleCoverage';
 
 const { mochaOptions, runnerOptions, coverageOptions } = setArgs();
 const { grep, invert, reporter, serverReporter, xUnitOutput } = mochaOptions || {};
@@ -65,106 +64,7 @@ function exitIfDone(type, failures) {
       console.log('--------------------------------');
     }
 
-    let promise = Promise.resolve(true);
-
-    if (coverageOptions) {
-      const cLog = (...args) => {
-        if (coverageOptions.verbose) {
-          console.log(...args);
-        }
-      };
-
-      cLog('Export code coverage');
-
-      // TODO: Run coverage reports here ...
-      const importCoverageDump = () => new Promise((resolve, reject) => {
-        cLog('- In coverage');
-        HTTP.get(Meteor.absoluteUrl('coverage/import'), (error, response) => {
-          if (error) {
-            reject(new Error('Failed to import coverage file'));
-            return;
-          }
-
-          const { statusCode } = response;
-
-          if (statusCode !== 200) {
-            reject(new Error('Failed to import coverage file'));
-          }
-          resolve();
-        });
-      });
-
-      const exportReport = (fileType, reportType) => new Promise((resolve, reject) => {
-        cLog(`- Out ${fileType}`);
-        const url = Meteor.absoluteUrl(`/coverage/export/${fileType}`);
-        HTTP.get(url, (error, response) => {
-          if (error) {
-            reject(new Error(`Failed to save ${fileType} ${reportType}`));
-            return;
-          }
-
-          const { statusCode } = response;
-
-          if (statusCode !== 200) {
-            reject(new Error(`Failed to save ${fileType} ${reportType}`));
-          }
-          resolve();
-        });
-      });
-
-      const exportRemap = () => new Promise((resolve, reject) => {
-        cLog('- Out remap');
-        HTTP.get(Meteor.absoluteUrl('/coverage/export/remap'), (error, response) => {
-          if (error) {
-            reject(new Error('Failed to remap your coverage'));
-            return;
-          }
-
-          const { statusCode } = response;
-
-          if (statusCode !== 200) {
-            reject(new Error('Failed to remap your coverage'));
-          }
-          resolve();
-        });
-      });
-
-      if (coverageOptions.in.coverage) {
-        promise = promise.then(() => importCoverageDump());
-      }
-
-      if (coverageOptions.out.coverage) {
-        promise = promise.then(() => exportReport('coverage', 'dump'));
-      }
-
-      if (coverageOptions.out.lcovonly) {
-        promise = promise.then(() => exportReport('lcovonly', 'coverage'));
-      }
-
-      if (coverageOptions.out.html) {
-        promise = promise.then(() => exportReport('html', 'report'));
-      }
-
-      if (coverageOptions.out.json) {
-        promise = promise.then(() => exportReport('json', 'report'));
-      }
-
-      if (coverageOptions.out.text_summary) {
-        promise = promise.then(() => exportReport('text-summary', 'report'));
-      }
-
-      if (coverageOptions.out.remap) {
-        promise = promise.then(() => exportRemap());
-      }
-
-      if (coverageOptions.out.json_summary) {
-        promise = promise.then(() => exportReport('json-summary', 'dump'));
-      }
-
-      promise = promise.catch(console.error);
-    }
-
-    promise = promise.then(() => {
+    handleCoverage(coverageOptions).then(() => {
       // if no env for TEST_WATCH, tests should exit when done
       if (!runnerOptions.testWatch) {
         if (clientFailures + serverFailures > 0) {

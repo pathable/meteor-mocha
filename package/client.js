@@ -8,7 +8,7 @@ function saveCoverage(config, done) {
     return;
   }
 
-  if (!Package || !Package.meteor || !Package.meteor.Meteor || !Package.meteor.Meteor.sendCoverage) {
+  if (typeof Package === 'undefined' || !Package.meteor || !Package.meteor.Meteor || !Package.meteor.Meteor.sendCoverage) {
     console.error('Coverage package missing or not correclty launched');
     done();
     return;
