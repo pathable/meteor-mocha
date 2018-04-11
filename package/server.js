@@ -3,8 +3,9 @@ import { mochaInstance } from 'meteor/practicalmeteor:mocha-core';
 import { startBrowser } from 'meteor/meteortesting:browser-tests';
 
 import setArgs from './runtimeArgs';
+import handleCoverage from './server.handleCoverage';
 
-const { mochaOptions, runnerOptions } = setArgs();
+const { mochaOptions, runnerOptions, coverageOptions } = setArgs();
 const { grep, invert, reporter, serverReporter, xUnitOutput } = mochaOptions || {};
 
 // Allow the remote mocha.css file to be inserted, in case any CSP stuff
@@ -69,14 +70,16 @@ function exitIfDone(type, failures) {
       console.log('--------------------------------');
     }
 
-    // if no env for TEST_WATCH, tests should exit when done
-    if (!runnerOptions.testWatch) {
-      if (clientFailures + serverFailures > 0) {
-        process.exit(1); // exit with non-zero status if there were failures
-      } else {
-        process.exit(0);
+    handleCoverage(coverageOptions).then(() => {
+      // if no env for TEST_WATCH, tests should exit when done
+      if (!runnerOptions.testWatch) {
+        if (clientFailures + serverFailures > 0) {
+          process.exit(1); // exit with non-zero status if there were failures
+        } else {
+          process.exit(0);
+        }
       }
-    }
+    });
   }
 }
 

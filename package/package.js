@@ -11,10 +11,12 @@ Package.onUse(function onUse(api) {
   api.use([
     'practicalmeteor:mocha-core@1.0.0',
     'ecmascript@0.3.0',
+    'lmieulet:meteor-coverage@1.1.4 || 2.0.1',
   ]);
 
   api.use([
     'browser-policy@1.0.0',
+    'http@1.1.1',
     'meteortesting:browser-tests@0.2.0'
   ], 'server');
 
