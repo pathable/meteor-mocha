@@ -1,16 +1,18 @@
-import { BrowserPolicy } from 'meteor/browser-policy-common';
 import { mochaInstance } from 'meteor/practicalmeteor:mocha-core';
 import { startBrowser } from 'meteor/meteortesting:browser-tests';
 
 import setArgs from './runtimeArgs';
 
+if (Package['browser-policy-common']) {
+  import { BrowserPolicy } from 'meteor/browser-policy-common';
+  // Allow the remote mocha.css file to be inserted, in case any CSP stuff
+  // exists for the domain.
+  BrowserPolicy.content.allowInlineStyles();
+  BrowserPolicy.content.allowStyleOrigin('https://cdn.rawgit.com');
+}
+
 const { mochaOptions, runnerOptions } = setArgs();
 const { grep, invert, reporter, serverReporter, xUnitOutput } = mochaOptions || {};
-
-// Allow the remote mocha.css file to be inserted, in case any CSP stuff
-// exists for the domain.
-BrowserPolicy.content.allowStyleOrigin('https://cdn.rawgit.com');
-BrowserPolicy.content.allowInlineStyles();
 
 // Since intermingling client and server log lines would be confusing,
 // the idea here is to buffer all client logs until server tests have
