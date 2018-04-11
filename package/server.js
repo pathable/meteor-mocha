@@ -2,6 +2,7 @@ import { mochaInstance } from 'meteor/practicalmeteor:mocha-core';
 import { startBrowser } from 'meteor/meteortesting:browser-tests';
 
 import setArgs from './runtimeArgs';
+import handleCoverage from './server.handleCoverage';
 
 if (Package['browser-policy-common']) {
   import { BrowserPolicy } from 'meteor/browser-policy-common';
@@ -11,7 +12,7 @@ if (Package['browser-policy-common']) {
   BrowserPolicy.content.allowStyleOrigin('https://cdn.rawgit.com');
 }
 
-const { mochaOptions, runnerOptions } = setArgs();
+const { mochaOptions, runnerOptions, coverageOptions } = setArgs();
 const { grep, invert, reporter, serverReporter, xUnitOutput } = mochaOptions || {};
 
 // Since intermingling client and server log lines would be confusing,
@@ -71,14 +72,16 @@ function exitIfDone(type, failures) {
       console.log('--------------------------------');
     }
 
-    // if no env for TEST_WATCH, tests should exit when done
-    if (!runnerOptions.testWatch) {
-      if (clientFailures + serverFailures > 0) {
-        process.exit(1); // exit with non-zero status if there were failures
-      } else {
-        process.exit(0);
+    handleCoverage(coverageOptions).then(() => {
+      // if no env for TEST_WATCH, tests should exit when done
+      if (!runnerOptions.testWatch) {
+        if (clientFailures + serverFailures > 0) {
+          process.exit(1); // exit with non-zero status if there were failures
+        } else {
+          process.exit(0);
+        }
       }
-    }
+    });
   }
 }
 
