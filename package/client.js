@@ -47,8 +47,10 @@ function runTests() {
     mocha.options.useColors = true;
   }
 
-  // If no browser-driver is set, you most likely want to run the client-tests manually, right?
-  const currentReporter = runnerOptions.browserDriver ? clientReporter || reporter : 'html';
+  let currentReporter = clientReporter || reporter;
+  if (!currentReporter) {
+    currentReporter = runnerOptions.browserDriver ? 'spec' : 'html';
+  }
 
   if (currentReporter === 'html') {
     // If we're not running client tests automatically in a headless browser, then we
