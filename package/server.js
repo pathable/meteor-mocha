@@ -102,7 +102,7 @@ function serverTests(cb) {
   // We need to set the reporter when the tests actually run to ensure no conflicts with
   // other test driver packages that may be added to the app but are not actually being
   // used on this run.
-  mochaInstance.reporter(serverReporter || reporter, {
+  mochaInstance.reporter(serverReporter || reporter || 'spec', {
     output: xUnitOutput,
   });
 

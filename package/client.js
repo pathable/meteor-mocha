@@ -47,26 +47,29 @@ function runTests() {
     mocha.options.useColors = true;
   }
 
-  if (runnerOptions.browserDriver) {
-    mocha.reporter(clientReporter || reporter);
+  let currentReporter = clientReporter || reporter;
+  if (!currentReporter) {
+    currentReporter = runnerOptions.browserDriver ? 'spec' : 'html';
+  }
 
-    // These `window` properties are all used by the client testing script in the
-    // browser-tests package to know what is happening.
-    window.testsAreRunning = true;
-    mocha.run((failures) => {
-      saveCoverage(coverageOptions, () => {
-        window.testsAreRunning = false;
-        window.testFailures = failures;
-        window.testsDone = true;
-      });
-    });
-  } else {
+  if (currentReporter === 'html') {
     // If we're not running client tests automatically in a headless browser, then we
     // probably are going to want to see an HTML reporter when we load the page.
     prepForHTMLReporter(mocha);
-    mocha.reporter('html');
-    mocha.run();
   }
+
+  mocha.reporter(currentReporter);
+
+  // These `window` properties are all used by the client testing script in the
+  // browser-tests package to know what is happening.
+  window.testsAreRunning = true;
+  mocha.run((failures) => {
+    saveCoverage(coverageOptions, () => {
+      window.testsAreRunning = false;
+      window.testFailures = failures;
+      window.testsDone = true;
+    });
+  });
 }
 
 export { runTests };

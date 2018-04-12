@@ -27,7 +27,7 @@ export default function setArgs() {
     mochaOptions: {
       grep: MOCHA_GREP || false,
       invert: !!MOCHA_INVERT,
-      reporter: MOCHA_REPORTER || 'spec',
+      reporter: MOCHA_REPORTER,
       serverReporter: SERVER_TEST_REPORTER,
       clientReporter: CLIENT_TEST_REPORTER,
       xUnitOutput: XUNIT_FILE,
