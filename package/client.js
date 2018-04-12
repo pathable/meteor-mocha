@@ -3,6 +3,11 @@ import { mocha } from 'meteor/practicalmeteor:mocha-core';
 import prepForHTMLReporter from './prepForHTMLReporter';
 import './browser-shim';
 
+let uncaughtExceptions = 0;
+window.addEventListener('error', () => {
+  uncaughtExceptions++;
+});
+
 function saveCoverage(config, done) {
   if (!config) {
     done();
@@ -56,7 +61,7 @@ function runTests() {
     mocha.run((failures) => {
       saveCoverage(coverageOptions, () => {
         window.testsAreRunning = false;
-        window.testFailures = failures;
+        window.testFailures = failures + uncaughtExceptions;
         window.testsDone = true;
       });
     });
