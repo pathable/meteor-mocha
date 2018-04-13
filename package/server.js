@@ -1,3 +1,4 @@
+/* global Package */
 import { mochaInstance } from 'meteor/practicalmeteor:mocha-core';
 import { startBrowser } from 'meteor/meteortesting:browser-tests';
 
@@ -5,7 +6,8 @@ import setArgs from './runtimeArgs';
 import handleCoverage from './server.handleCoverage';
 
 if (Package['browser-policy-common']) {
-  import { BrowserPolicy } from 'meteor/browser-policy-common';
+  const { BrowserPolicy } = Package['browser-policy-common'];
+
   // Allow the remote mocha.css file to be inserted, in case any CSP stuff
   // exists for the domain.
   BrowserPolicy.content.allowInlineStyles();
