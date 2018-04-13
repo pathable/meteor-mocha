@@ -2,6 +2,10 @@
   "name": "meteor-mocha",
   "version": "0.0.0",
   "description": "Run Meteor package or app tests with Mocha",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/meteortesting/meteor-mocha"
+  },
   "scripts": {
     "lint": "eslint ./package"
   },
