@@ -18,18 +18,7 @@
     "eslint-plugin-import": "2.2.0",
     "eslint-plugin-jsx-a11y": "4.0.0",
     "eslint-plugin-react": "6.10.3",
-    "semantic-release": "15.1.7",
+    "semantic-release": "10.0.1",
     "semantic-release-meteor": "0.0.8"
-  },
-  "release": {
-    "verifyConditions": [
-      "semantic-release-meteor",
-      "@semantic-release/github"
-    ],
-    "getLastRelease": "semantic-release-meteor",
-    "publish": [
-      "semantic-release-meteor",
-      "@semantic-release/github"
-    ]
   }
 }
