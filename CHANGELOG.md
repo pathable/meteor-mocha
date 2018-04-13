@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 0.6.0
+
+- Optional code coverage support. Refer to "Run with code coverage" in the README
+- Client tests will now properly fail when there are uncaught exceptions
+- The `MOCHA_REPORTER` and `CLIENT_TEST_REPORTER` environment variables are no respected even when you do not specify a browser driver.
+- The `browser-policy` package is now a weak dependency
+
 ## 0.5.1
 
 - Fail with a message when mocha or a browser tests package does not properly pass the number of test failures
