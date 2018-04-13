@@ -13,6 +13,19 @@
     "eslint-config-airbnb": "14.1.0",
     "eslint-plugin-import": "2.2.0",
     "eslint-plugin-jsx-a11y": "4.0.0",
-    "eslint-plugin-react": "6.10.3"
+    "eslint-plugin-react": "6.10.3",
+    "semantic-release": "^15.1.7",
+    "semantic-release-meteor": "0.0.7"
+  },
+  "release": {
+    "verifyConditions": [
+      "semantic-release-meteor",
+      "@semantic-release/github"
+    ],
+    "getLastRelease": "semantic-release-meteor",
+    "publish": [
+      "semantic-release-meteor",
+      "@semantic-release/github"
+    ]
   }
 }

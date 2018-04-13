@@ -1,0 +1,9 @@
+{
+  "name": "mocha",
+  "version": "0.0.0-semantic-release",
+  "release": {
+    "verifyConditions": ["semantic-release-meteor", "@semantic-release/github"],
+    "getLastRelease": "semantic-release-meteor",
+    "publish": ["semantic-release-meteor", "@semantic-release/github"]
+  }
+}
