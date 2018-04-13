@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.0.0
+
+- Minimum `meteortesting:browser-tests` version is now `1.0.0`, which runs Chrome with `--headless` by default. If you don't use the Chrome driver, this will not be a breaking change.
+
 ## 0.6.0
 
 - Optional code coverage support. Refer to "Run with code coverage" in the README
