@@ -1,5 +1,5 @@
 /* global Package */
-import { mochaInstance } from 'meteor/practicalmeteor:mocha-core';
+import { mochaInstance } from 'meteor/meteortesting:mocha-core';
 import { startBrowser } from 'meteor/meteortesting:browser-tests';
 
 import setArgs from './runtimeArgs';
