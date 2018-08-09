@@ -9,7 +9,7 @@ Package.describe({
 
 Package.onUse(function onUse(api) {
   api.use([
-    'meteortesting:mocha-core@1.0.1',
+    'meteortesting:mocha-core@1.0.1 || 5.2.0',
     'ecmascript@0.3.0',
     'lmieulet:meteor-coverage@1.1.4 || 2.0.1',
   ]);
