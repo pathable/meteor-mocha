@@ -93,7 +93,10 @@ You can export TEST_BROWSER_VISIBLE=1 to show the Electron window while tests ru
 
 **PhantomJS**
 
+Support for PhantomJS has been deprecated because it's development is suspended. If you still want to use it you need to downgrade the dependency on `meteortesting:mocha-core` to `1.0.1`. For more information on why it got suspended, please take a look at [the repository](https://github.com/ariya/phantomjs)
+
 ```bash
+$ meteor add meteortesting:mocha-core@1.0.1
 $ meteor npm i --save-dev phantomjs-prebuilt
 $ TEST_BROWSER_DRIVER=phantomjs meteor test --once --driver-package meteortesting:mocha
 ```
