@@ -143,7 +143,7 @@ Because of the differences between client and server code, not all reporters wil
 ### Run with code coverage
 
 Code coverage was made possible by including `https://github.com/serut/meteor-coverage`
-To enable code coverage you have to set `COVERAGE` to `1` and `COVERAGE_APP_FOLDER` to the path of your project. On POSIX systems you can just use `COVERAGE_APP_FOLDER=$PWO/` whereby `COVERAGE_APP_FOLDER=%cd%\` gives the expected result on Windows.
+To enable code coverage you have to set `COVERAGE` to `1` and `COVERAGE_APP_FOLDER` to the path of your project. On POSIX systems you can just use `COVERAGE_APP_FOLDER=$PWD/` whereby `COVERAGE_APP_FOLDER=%cd%\` gives the expected result on Windows.
 
 In addition there are quite some additional options you can set:
 
