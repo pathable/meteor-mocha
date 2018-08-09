@@ -5,7 +5,7 @@ import { startBrowser } from 'meteor/meteortesting:browser-tests';
 import setArgs from './runtimeArgs';
 import handleCoverage from './server.handleCoverage';
 
-if (Package['browser-policy-common']) {
+if (Package['browser-policy-common'] && Package['browser-policy-content']) {
   const { BrowserPolicy } = Package['browser-policy-common'];
 
   // Allow the remote mocha.css file to be inserted, in case any CSP stuff
