@@ -11,7 +11,7 @@
     "test:app:nightmare:watch": "TEST_WATCH=1 TEST_BROWSER_DRIVER=nightmare meteor test --full-app --driver-package meteortesting:mocha"
   },
   "dependencies": {
-    "babel-runtime": "6.23.0",
+    "@babel/runtime": "7.0.0-beta.55",
     "nightmare": "2.10.0"
   }
 }
