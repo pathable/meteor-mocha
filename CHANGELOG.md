@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 1.0.1
+
+- Only allow inline and style origins if browser-policy-content exists
+- Allow usage of MochaJS 5.2.0
+
 ## 1.0.0
 
 - Minimum `meteortesting:browser-tests` version is now `1.0.0`, which runs Chrome with `--headless` by default. If you don't use the Chrome driver, this will not be a breaking change.
