@@ -1,9 +1,9 @@
 export default function setArgs() {
   const {
-    CLIENT_TEST_REPORTER,
     MOCHA_GREP,
     MOCHA_INVERT,
     MOCHA_REPORTER,
+    CLIENT_TEST_REPORTER,
     SERVER_TEST_REPORTER,
     TEST_BROWSER_DRIVER,
     TEST_CLIENT,
@@ -11,6 +11,8 @@ export default function setArgs() {
     TEST_SERVER,
     TEST_WATCH,
     XUNIT_FILE,
+    SERVER_MOCHA_OUTPUT,
+    CLIENT_MOCHA_OUTPUT,
     COVERAGE,
     COVERAGE_VERBOSE,
     COVERAGE_IN_COVERAGE,
@@ -28,9 +30,10 @@ export default function setArgs() {
       grep: MOCHA_GREP || false,
       invert: !!MOCHA_INVERT,
       reporter: MOCHA_REPORTER,
-      serverReporter: SERVER_TEST_REPORTER,
+      serverReporter: SERVER_TEST_REPORTER || XUNIT_FILE, // XUNIT_FILE is left in here for compatibility to older versions
       clientReporter: CLIENT_TEST_REPORTER,
-      xUnitOutput: XUNIT_FILE,
+      serverOutput: SERVER_MOCHA_OUTPUT,
+      clientOutput: CLIENT_MOCHA_OUTPUT,
     },
     runnerOptions: {
       runClient: (TEST_CLIENT !== 'false' && TEST_CLIENT !== '0'),

@@ -2,6 +2,8 @@
 import { mochaInstance } from 'meteor/meteortesting:mocha-core';
 import { startBrowser } from 'meteor/meteortesting:browser-tests';
 
+import fs from 'fs';
+
 import setArgs from './runtimeArgs';
 import handleCoverage from './server.handleCoverage';
 
@@ -15,7 +17,7 @@ if (Package['browser-policy-common'] && Package['browser-policy-content']) {
 }
 
 const { mochaOptions, runnerOptions, coverageOptions } = setArgs();
-const { grep, invert, reporter, serverReporter, xUnitOutput } = mochaOptions || {};
+const { grep, invert, reporter, serverReporter, serverOutput, clientOutput } = mochaOptions || {};
 
 // Since intermingling client and server log lines would be confusing,
 // the idea here is to buffer all client logs until server tests have
@@ -105,7 +107,7 @@ function serverTests(cb) {
   // other test driver packages that may be added to the app but are not actually being
   // used on this run.
   mochaInstance.reporter(serverReporter || reporter || 'spec', {
-    output: xUnitOutput,
+    output: serverOutput,
   });
 
   mochaInstance.run((failureCount) => {
@@ -137,10 +139,18 @@ function clientTests() {
 
   startBrowser({
     stdout(data) {
-      clientLogBuffer(data.toString());
+      if (clientOutput) {
+        fs.appendFileSync(clientOutput, data.toString());
+      } else {
+        clientLogBuffer(data.toString());
+      }
     },
     stderr(data) {
-      clientLogBuffer(data.toString());
+      if (clientOutput) {
+        fs.appendFileSync(clientOutput, data.toString());
+      } else {
+        clientLogBuffer(data.toString());
+      }
     },
     done(failureCount) {
       if (typeof failureCount !== 'number') {
