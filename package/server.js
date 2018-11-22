@@ -145,6 +145,13 @@ function clientTests() {
         clientLogBuffer(data.toString());
       }
     },
+    writebuffer(data) {
+      if (clientOutput) {
+        fs.appendFileSync(clientOutput, data.toString());
+      } else {
+        clientLogBuffer(data.toString());
+      }
+    },
     stderr(data) {
       if (clientOutput) {
         fs.appendFileSync(clientOutput, data.toString());
