@@ -121,7 +121,7 @@ By default meteortesting:mocha will run in series. This is a safety mechanism si
 
 If you design your client and server tests to not share state, then you can run tests faster. Run in parallel by exporting the environment variable `TEST_PARALLEL=1` before running.
 
-#### Write tests to a file
+### Write tests to a file
 
 To write the tests to a file, set `SERVER_MOCHA_OUTPUT` and `CLIENT_MOCHA_OUTPUT` to the full path + filename, e.g., `$PWD/unit_server.txt` and `$PWD/unit_client.txt`. This is specially important when using a format like `xunit`. The use of `XUNIT_FILE` is deprecated because it has the same functionality as `SERVER_MOCHA_OUTPUT`, which is a better fit for what it actually does.
 
