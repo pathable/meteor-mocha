@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 1.1.0
+
+- Report all buffer write operations out to the output (file or console). Previous versions ignored them because of something in `phantomJS` which is discontinued.
+- Allow saving both client and server tests to a file (available via `SERVER_MOCHA_OUTPUT` and `CLIENT_MOCHA_OUTPUT`)
+
 ## 1.0.1
 
 - Only allow inline and style origins if browser-policy-content exists
