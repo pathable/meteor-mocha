@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.1.1
+
+- Confirm compatibility with serut:meteor-coverage@3
+
 ## 1.1.0
 
 - Report all buffer write operations out to the output (file or console). Previous versions ignored them because of something in `phantomJS` which is discontinued.
