@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.1.2
+
+- Confirm compatibility with meteortesting:mocha-core@6
+
 ## 1.1.1
 
 - Confirm compatibility with serut:meteor-coverage@3
