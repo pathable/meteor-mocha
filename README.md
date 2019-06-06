@@ -2,7 +2,7 @@
 
 _Formerly published as dispatch:mocha. Originally created by [Dispatch](http://www.dispatch.me/) but now community maintained._
 
-A Mocha test driver package for Meteor. This package reports server AND client test results in the server console and can be used for running tests on a CI server or locally. This achieves what `spacejam` does but without the need for a separate Node package.
+A Mocha test driver package for Meteor. This package reports server AND client test results in the server console and can be used for running tests on a CI server or locally.
 
 ## Installation
 
@@ -61,45 +61,7 @@ div#mocha {
 
 ### Run client tests headless
 
-You'll need to specify which headless browser to use and install the necessary NPM packages. To do this, set the `TEST_BROWSER_DRIVER` environment variable. There are currently 3 supported browsers:
-
-**Chrome**
-
-Meteor 1.6+:
-
-```bash
-$ meteor npm i --save-dev selenium-webdriver chromedriver
-$ TEST_BROWSER_DRIVER=chrome meteor test --once --driver-package meteortesting:mocha
-```
-
-Meteor < 1.6:
-
-**NOTE: Currently you must pin to exactly version 3.0.0-beta-2 of selenium-webdriver for earlier versions of Meteor because the latest webdriver package only works on Node 6.x+. The `-E` in the command below is important!**
-
-```bash
-$ meteor npm i -E --save-dev selenium-webdriver@3.0.0-beta-2
-$ meteor npm i --save-dev chromedriver
-$ TEST_BROWSER_DRIVER=chrome meteor test --once --driver-package meteortesting:mocha
-```
-
-**Nightmare/Electron**
-
-```bash
-$ meteor npm i --save-dev nightmare
-$ TEST_BROWSER_DRIVER=nightmare meteor test --once --driver-package meteortesting:mocha
-```
-
-You can export TEST_BROWSER_VISIBLE=1 to show the Electron window while tests run.
-
-**PhantomJS**
-
-Support for PhantomJS has been deprecated because it's development is suspended. If you still want to use it you need to downgrade the dependency on `meteortesting:mocha-core` to `1.0.1`. For more information on why it got suspended, please take a look at [the repository](https://github.com/ariya/phantomjs)
-
-```bash
-$ meteor add meteortesting:mocha-core@1.0.1
-$ meteor npm i --save-dev phantomjs-prebuilt
-$ TEST_BROWSER_DRIVER=phantomjs meteor test --once --driver-package meteortesting:mocha
-```
+Support for running browser in headless mode is made possible by the package `` which this plugin depends on. Please refer to their documentation for further information: https://github.com/meteortesting/meteor-browser-tests#dependencies
 
 ### Run only server or only client tests
 
