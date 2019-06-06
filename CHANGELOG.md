@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 1.1.3
+
+- Updated dev-dependencies
+- Make use of env variable METEOR_AUTO_RESTART, added in Meteor 1.8.1
+
 ## 1.1.2
 
 - Confirm compatibility with meteortesting:mocha-core@6
