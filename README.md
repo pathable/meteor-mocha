@@ -14,25 +14,28 @@ meteor add meteortesting:mocha
 
 ## Run app tests
 
-To run unit tests one time and exit:
+To watch your tests in Meteor 1.8.1+:
 
 ```bash
-meteor test --once --driver-package meteortesting:mocha
+meteor test --driver-package meteortesting:mocha
+meteor test --driver-package meteortesting:mocha --full-app
 ```
 
-To run full-app tests one time and exit:
+> NOTE: Watch mode does not properly rerun client tests if you run a headless browser and change only client code. To work around this, you can add or remove whitespace from a server file, and that will trigger both server and client tests to rerun.
+
+If you want the process to exit after all tests are done, add the flag `--once`:
 
 ```bash
-meteor test --once --full-app --driver-package meteortesting:mocha
+meteor test --driver-package meteortesting:mocha --once
+meteor test --driver-package meteortesting:mocha --once --full-app
 ```
 
-To run in watch mode, restarting as you change files, add `TEST_WATCH=1` before your test command and remove the `--once` flag. For example:
+In Meteor <1.8.1, you must add `TEST_WATCH=1` if you do not add the `--once` flag. For example:
 
 ```bash
 TEST_WATCH=1 meteor test --driver-package meteortesting:mocha
+TEST_WATCH=1 meteor test --driver-package meteortesting:mocha --full-app
 ```
-
-> NOTE: Watch mode does not properly rerun client tests if you change only client code. To work around this, you can add or remove whitespace from a server file, and that will trigger both server and client tests to rerun.
 
 If you have client tests, you can either open any browser to run them, or install a browser driver to run them headless.
 
@@ -137,10 +140,10 @@ A good best practice is to define these commands as run scripts in your app's `p
   "test-app-chrome": "TEST_BROWSER_DRIVER=chrome meteor test --full-app --once --driver-package meteortesting:mocha",
   "test-phantom": "TEST_BROWSER_DRIVER=phantomjs meteor test --once --driver-package meteortesting:mocha",
   "test-app-phantom": "TEST_BROWSER_DRIVER=phantomjs meteor test --full-app --once --driver-package meteortesting:mocha",
-  "test-watch": "TEST_BROWSER_DRIVER=chrome TEST_WATCH=1 meteor test --driver-package meteortesting:mocha",
-  "test-app-watch": "TEST_BROWSER_DRIVER=chrome TEST_WATCH=1 meteor test --full-app --driver-package meteortesting:mocha",
-  "test-watch-browser": "TEST_WATCH=1 meteor test --driver-package meteortesting:mocha",
-  "test-app-watch-browser": "TEST_WATCH=1 meteor test --full-app --driver-package meteortesting:mocha",
+  "test-watch": "TEST_BROWSER_DRIVER=chrome meteor test --driver-package meteortesting:mocha",
+  "test-app-watch": "TEST_BROWSER_DRIVER=chrome meteor test --full-app --driver-package meteortesting:mocha",
+  "test-watch-browser": "meteor test --driver-package meteortesting:mocha",
+  "test-app-watch-browser": "meteor test --full-app --driver-package meteortesting:mocha",
   "lint": "eslint .",
   "start": "meteor run"
 }

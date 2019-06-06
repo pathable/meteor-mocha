@@ -10,6 +10,7 @@ export default function setArgs() {
     TEST_PARALLEL,
     TEST_SERVER,
     TEST_WATCH,
+    METEOR_AUTO_RESTART, // Introduced in Meteor 1.8.1 to indicate if this instance will automatically restart after exiting. https://github.com/meteor/meteor/pull/10465
     XUNIT_FILE,
     SERVER_MOCHA_OUTPUT,
     CLIENT_MOCHA_OUTPUT,
@@ -39,7 +40,7 @@ export default function setArgs() {
       runClient: (TEST_CLIENT !== 'false' && TEST_CLIENT !== '0'),
       runServer: (TEST_SERVER !== 'false' && TEST_SERVER !== '0'),
       browserDriver: TEST_BROWSER_DRIVER,
-      testWatch: TEST_WATCH,
+      testWatch: TEST_WATCH || METEOR_AUTO_RESTART === 'true',
       runParallel: !!TEST_PARALLEL,
     },
   };
