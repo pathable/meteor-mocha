@@ -43,13 +43,13 @@ function runTests() {
 
   const { clientReporter, grep, invert, reporter } = mochaOptions || {};
   if (grep) mocha.grep(grep);
-  if (invert) mocha.options.invert = invert;
+  if (invert) mocha.invert(invert);
 
   // The chrome/webdriver logging adapter seems to escape color
   // codes, so we can't support colors for that adapter.
   // Feel free to fix this if you know how.
   if (runnerOptions.browserDriver !== 'chrome') {
-    mocha.options.useColors = true;
+    mocha.color(true);
   }
 
   let currentReporter = clientReporter || reporter;

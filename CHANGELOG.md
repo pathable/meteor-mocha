@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 1.1.4
+
+- Updated dev-dependencies
+- Raised compatibility to meteortesting:mocha-core@7
+
 ## 1.1.3
 
 - Updated dev-dependencies
