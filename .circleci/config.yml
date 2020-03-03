@@ -6,7 +6,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:8.11.1
+      - image: circleci/node:12.14.0
 
     working_directory: ~/repo
 
@@ -28,7 +28,7 @@ jobs:
 
   lint:
     docker:
-      - image: circleci/node:8.11.1
+      - image: circleci/node:12.14.0
 
     working_directory: ~/repo
 
@@ -45,7 +45,7 @@ jobs:
 
   deploy:
     docker:
-      - image: circleci/node:8.11.1
+      - image: circleci/node:12.14.0
 
     working_directory: ~/repo
 
@@ -60,7 +60,7 @@ jobs:
 
       - run: curl https://install.meteor.com/ | sh
       - run: export PATH=$HOME/.meteor:$PATH
-      - run: cd package && npx semantic-release@10.0.1
+      - run: npm run publish
 
 workflows:
   version: 2
