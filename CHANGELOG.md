@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 1.1.5
+
+- Updated dev-dependencies
+- Raised compatibility to meteortesting:browser-tests@1.3.2
+
 ## 1.1.4
 
 - Updated dev-dependencies
