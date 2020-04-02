@@ -12,6 +12,20 @@ In a Meteor 1.3+ app directory:
 meteor add meteortesting:mocha
 ```
 
+Not installing the package is possible but not advisable when creating a CI pipeline because the system will always download the latest version available, which might break your CI pipeline in a future major release of this package.
+
+Since version 2.0.0 the package [lmieulet:meteor-coverage](https://github.com/serut/meteor-coverage) is no longer bundled with this package. If you permanently want code coverage please run:
+
+```bash
+meteor add lmieulet:meteor-coverage
+```
+
+If you rather want the package to be included only for a single run, add the parameter `--extra-packages lmieulet:meteor-coverage` as shown to your `meteor test` command:
+
+```bash
+meteor test --driver-package meteortesting:mocha --extra-packages lmieulet:meteor-coverage
+```
+
 ## Run app tests
 
 To watch your tests in Meteor 1.8.1+:
@@ -112,7 +126,18 @@ $ CLIENT_TEST_REPORTER="tap" meteor test --once --driver-package meteortesting:m
 
 ### Run with code coverage
 
-Code coverage was made possible by including `https://github.com/serut/meteor-coverage`
+Since version 2.0.0 the package [lmieulet:meteor-coverage](https://github.com/serut/meteor-coverage) is no longer bundled with this package. If you permanently want code coverage please run:
+
+```bash
+meteor add lmieulet:meteor-coverage
+```
+
+If you rather want the package to be included only for a single run, add the parameter `--extra-packages lmieulet:meteor-coverage` as shown to your `meteor test` command:
+
+```bash
+meteor test --driver-package meteortesting:mocha --extra-packages lmieulet:meteor-coverage
+```
+
 To enable code coverage you have to set `COVERAGE` to `1` and `COVERAGE_APP_FOLDER` to the path of your project. On POSIX systems you can just use `COVERAGE_APP_FOLDER=$PWD/` whereby `COVERAGE_APP_FOLDER=%cd%\` gives the expected result on Windows.
 
 In addition there are quite some additional options you can set:

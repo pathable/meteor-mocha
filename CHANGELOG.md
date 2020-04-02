@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.0.0
+
+- Package for code coverage (serut:meteor-coverage) is now optional. This ensures you install the latest compatible version.
+
 ## 1.1.5
 
 - Updated dev-dependencies
