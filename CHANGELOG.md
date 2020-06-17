@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 2.0.1
+
+- Allow loading mocha options from .mocharc file
+- Raised compatibility to meteortesting:mocha-core@8
+
 ## 2.0.0
 
 - Package for code coverage (serut:meteor-coverage) is now optional. This ensures you install the latest compatible version.
