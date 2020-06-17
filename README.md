@@ -92,7 +92,18 @@ To exclude any tests, you must use the grep option above plus `MOCHA_INVERT=1`. 
 
 ### Specify global timeout
 
-Since `meteortesting:mocha-core@5.2.0_3` it's also possible to modify the default timeout. To override Mocha's default timeout of 2 seconds for all tests, add the environment variable `MOCHA_TIMEOUT=your_timeout_in_ms`.
+To override Mocha's default timeout of 2 seconds for all tests, add the environment variable `MOCHA_TIMEOUT=your_timeout_in_ms`.
+
+### Specify mocha configuration with .mocharc file
+
+You can configure the mocha runner with a `.mocharc.js` or a `.mocharc.json` file at the root of your Meteor app. This package uses mocha programmatically, so it supports a constrained list of options.
+
+If both files are defined, `.mocharc.js` will overwrite the settings in `.mocharc.json`.
+
+The setting `timeout` will be overwritten if the environment variable `MOCHA_TIMEOUT` is set.
+
+* Read more about using mocha and supported options [here](https://github.com/mochajs/mocha/wiki/Using-Mocha-programmatically).
+* You can find examples of config files [here](https://github.com/mochajs/mocha/tree/master/example/config).
 
 ### Run in parallel
 
