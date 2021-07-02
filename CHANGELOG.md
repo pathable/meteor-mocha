@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 2.0.2
+
+- Support either 1.x or 2.x version of `http` package
+- Update NPM dependencies
+
 ## 2.0.1
 
 - Allow loading mocha options from .mocharc file
