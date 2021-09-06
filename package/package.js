@@ -1,5 +1,5 @@
 Package.describe({
-  name: 'meteortesting:mocha',
+  name: 'pathable:mocha',
   summary: 'Run Meteor package or app tests with Mocha',
   git: 'https://github.com/meteortesting/meteor-mocha.git',
   documentation: '../README.md',
